@@ -1,0 +1,287 @@
+-- [[ ⛎ ตัวเหี้ยมั่ง tiktok dola TROLL HUB V.1 ⛎ ]] --
+local player = game.Players.LocalPlayer
+local coreGui = game:GetService("CoreGui")
+local runService = game:GetService("RunService")
+
+local sgui = Instance.new("ScreenGui")
+sgui.Name = "TrollHubDola"
+sgui.ResetOnSpawn = false
+pcall(function() sgui.Parent = coreGui end)
+if sgui.Parent == nil then sgui.Parent = player:WaitForChild("PlayerGui") end
+
+-- กรอบหลัก
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 350, 0, 450)
+frame.Position = UDim2.new(0.5, -175, 0.5, -225)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+frame.BorderSizePixel = 2
+frame.BorderColor3 = Color3.fromRGB(255, 0, 50)
+frame.Active = true
+frame.Draggable = true
+frame.Parent = sgui
+
+-- รูปภาพ (ตรงนี้แหละที่มึงต้องเอา ID รูปมาใส่)
+local img = Instance.new("ImageLabel")
+img.Size = UDim2.new(0, 80, 0, 80)
+img.Position = UDim2.new(0, 10, 0, 10)
+img.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+img.Image = "rbxassetid://16447817454" -- มึงเอา ID รูป 1000251909 ของมึงมาใส่ตรงนี้ได้เลย!
+img.ScaleType = Enum.ScaleType.Crop
+img.Parent = frame
+
+-- ชื่อ UI
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -100, 0, 40)
+title.Position = UDim2.new(0, 100, 0, 10)
+title.BackgroundTransparency = 1
+title.Text = "ตัวเหี้ยมั่ง tiktok dola ⛎"
+title.TextColor3 = Color3.fromRGB(255, 200, 0)
+title.Font = Enum.Font.GothamBlack
+title.TextSize = 18
+title.TextWrapped = true
+title.Parent = frame
+
+local subTitle = Instance.new("TextLabel")
+subTitle.Size = UDim2.new(1, -100, 0, 30)
+subTitle.Position = UDim2.new(0, 100, 0, 50)
+subTitle.BackgroundTransparency = 1
+subTitle.Text = "ระบบกวนตีนชาวบ้าน V.1"
+subTitle.TextColor3 = Color3.fromRGB(255, 100, 100)
+subTitle.Font = Enum.Font.Gotham
+subTitle.TextSize = 14
+subTitle.Parent = frame
+
+-- ปุ่มปิด
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, 30, 0, 30)
+closeBtn.Position = UDim2.new(1, -30, 0, 0)
+closeBtn.BackgroundTransparency = 1
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.fromRGB(255, 50, 50)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 18
+closeBtn.Parent = frame
+closeBtn.MouseButton1Click:Connect(function() sgui:Destroy() end)
+
+-- ช่องใส่ชื่อเป้าหมาย (สำคัญมาก ไว้ป่วนคนอื่น)
+local targetInput = Instance.new("TextBox")
+targetInput.Size = UDim2.new(1, -20, 0, 35)
+targetInput.Position = UDim2.new(0, 10, 0, 100)
+targetInput.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+targetInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+targetInput.PlaceholderText = "พิมพ์ชื่อคนที่จะป่วน (พิมพ์แค่ตัวแรกก็พอ)"
+targetInput.Font = Enum.Font.Gotham
+targetInput.TextSize = 14
+targetInput.Parent = frame
+
+-- กรอบใส่ปุ่ม
+local scroll = Instance.new("ScrollingFrame")
+scroll.Size = UDim2.new(1, -20, 1, -150)
+scroll.Position = UDim2.new(0, 10, 0, 140)
+scroll.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.new(0, 0, 0, 950) -- ขนาดความยาว
+scroll.Parent = frame
+
+local layout = Instance.new("UIGridLayout")
+layout.CellSize = UDim2.new(0.48, 0, 0, 40)
+layout.CellPadding = UDim2.new(0, 5, 0, 5)
+layout.Parent = scroll
+
+-- ระบบหาผู้เล่นจากชื่อย่อ
+local function getTarget()
+    local txt = string.lower(targetInput.Text)
+    for _, v in pairs(game.Players:GetPlayers()) do
+        if v ~= player and string.sub(string.lower(v.Name), 1, string.len(txt)) == txt or string.sub(string.lower(v.DisplayName), 1, string.len(txt)) == txt then
+            return v
+        end
+    end
+    return nil
+end
+
+-- สร้างปุ่ม
+local function addBtn(text, color, func)
+    local btn = Instance.new("TextButton")
+    btn.BackgroundColor3 = color
+    btn.Text = text
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 12
+    btn.Parent = scroll
+    btn.MouseButton1Click:Connect(func)
+end
+
+-- ==========================================
+-- 😈 20 ฟังก์ชันกวนตีนสุดติ่ง (คนอื่นเห็นด้วย!)
+-- ==========================================
+
+local stalking = false
+local orbiting = false
+
+-- 1. Fling (พุ่งชนเป้าหมายให้ปลิวกระเด็น - ฮิตสุด)
+addBtn("🌪️ ชนเป้าหมายปลิว (Fling)", Color3.fromRGB(200, 50, 50), function()
+    local t = getTarget()
+    if t and t.Character and t.Character:FindFirstChild("HumanoidRootPart") and player.Character then
+        local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+        local spin = Instance.new("BodyAngularVelocity")
+        spin.AngularVelocity = Vector3.new(0, 99999, 0)
+        spin.MaxTorque = Vector3.new(0, math.huge, 0)
+        spin.Parent = hrp
+        
+        for i = 1, 20 do
+            hrp.CFrame = t.Character.HumanoidRootPart.CFrame
+            task.wait(0.05)
+        end
+        spin:Destroy()
+    end
+end)
+
+-- 2. เกาะหัวเป้าหมาย
+addBtn("🐒 ขี่คอเป้าหมาย", Color3.fromRGB(200, 100, 50), function()
+    stalking = not stalking
+    local t = getTarget()
+    while stalking and t and t.Character and t.Character:FindFirstChild("Head") do
+        player.Character.HumanoidRootPart.CFrame = t.Character.Head.CFrame + Vector3.new(0, 2, 0)
+        task.wait()
+    end
+end)
+
+-- 3. วิ่งวนรอบตัวเป้าหมาย
+addBtn("🌀 วิ่งวนกวนตีน", Color3.fromRGB(150, 50, 200), function()
+    orbiting = not orbiting
+    local t = getTarget()
+    local angle = 0
+    while orbiting and t and t.Character and t.Character:FindFirstChild("HumanoidRootPart") do
+        angle = angle + 0.1
+        local offset = Vector3.new(math.cos(angle) * 5, 0, math.sin(angle) * 5)
+        player.Character.HumanoidRootPart.CFrame = t.Character.HumanoidRootPart.CFrame + offset
+        task.wait()
+    end
+end)
+
+-- 4. วาร์ปไปหาคนแบบสุ่มดักหน้า
+addBtn("🎲 วาร์ปหลอนๆ (สุ่มคน)", Color3.fromRGB(50, 150, 200), function()
+    local players = game.Players:GetPlayers()
+    local randomPlayer = players[math.random(1, #players)]
+    if randomPlayer ~= player and randomPlayer.Character then
+        player.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -3)
+    end
+end)
+
+-- 5. สแปมแชทกวนตีน
+addBtn("💬 สแปมแชท 10 รอบ", Color3.fromRGB(50, 200, 100), function()
+    for i=1, 10 do
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("กูคือ ตัวเหี้ยมั่ง tiktok dola ⛎ ใครซ่าเดี๋ยวโดน!", "All")
+        task.wait(0.5)
+    end
+end)
+
+-- 6. ลากของตกพื้นไปหาเป้าหมาย (ขยะอวกาศ)
+addBtn("📦 ลากขยะใส่เป้าหมาย", Color3.fromRGB(100, 100, 100), function()
+    local t = getTarget()
+    if t and t.Character then
+        for _, v in pairs(workspace:GetDescendants()) do
+            if v:IsA("BasePart") and not v.Anchored and not v:IsDescendantOf(game.Players) then
+                v.CFrame = t.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end
+end)
+
+-- 7. เดินทะลุกำแพง (Noclip)
+addBtn("👻 ทะลุกำแพง (Noclip)", Color3.fromRGB(100, 255, 200), function()
+    for _, part in pairs(player.Character:GetDescendants()) do
+        if part:IsA("BasePart") then part.CanCollide = false end
+    end
+end)
+
+-- 8. เตะตัวเองออกจากแมพ (ฟังก์ชันคลาสสิกของมึง)
+addBtn("🚪 เตะตัวเอง (234)", Color3.fromRGB(255, 50, 50), function()
+    player:Kick("Roblox เตะคุณเพราะว่าคุณนิสัยดีเกินไป 234")
+end)
+
+-- 9. หยุดเวลา (Lag Switch ตัวเองให้คนอื่นเห็นเราค้าง)
+addBtn("⏱️ แกล้งเน็ตปิง (Lag)", Color3.fromRGB(50, 50, 50), function()
+    player.Character.HumanoidRootPart.Anchored = not player.Character.HumanoidRootPart.Anchored
+end)
+
+-- 10. ล้มทับคนอื่น (Ragdoll)
+addBtn("🥴 ล้มใส่หน้า", Color3.fromRGB(200, 150, 50), function()
+    player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Ragdoll)
+end)
+
+-- 11. แกล้งตายต่อหน้าเป้าหมาย
+addBtn("💀 แกล้งตายใส่เป้าหมาย", Color3.fromRGB(0, 0, 0), function()
+    local t = getTarget()
+    if t and t.Character then
+        player.Character.HumanoidRootPart.CFrame = t.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, -2)
+        player.Character:BreakJoints()
+    end
+end)
+
+-- 12. พุ่งเป็นจรวดใส่เป้าหมาย
+addBtn("🚀 พุ่งชน (Rocket)", Color3.fromRGB(255, 100, 0), function()
+    local t = getTarget()
+    if t and t.Character then
+        local bv = Instance.new("BodyVelocity")
+        bv.Velocity = (t.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Unit * 150
+        bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        bv.Parent = player.Character.HumanoidRootPart
+        task.wait(1)
+        bv:Destroy()
+    end
+end)
+
+-- 13. แอบดูเป้าหมาย (Spectate)
+addBtn("👁️ แอบดูเป้าหมาย", Color3.fromRGB(100, 0, 100), function()
+    local t = getTarget()
+    if t and t.Character then
+        workspace.CurrentCamera.CameraSubject = t.Character.Humanoid
+    end
+end)
+
+-- 14. คืนกล้อง (เลิกแอบดู)
+addBtn("🎥 คืนกล้องตัวเอง", Color3.fromRGB(150, 50, 100), function()
+    workspace.CurrentCamera.CameraSubject = player.Character.Humanoid
+end)
+
+-- 15. เดินบนน้ำ/อากาศ
+addBtn("☁️ เดินบนอากาศ", Color3.fromRGB(200, 255, 255), function()
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(10, 1, 10)
+    part.Transparency = 0.5
+    part.Anchored = true
+    part.CFrame = player.Character.HumanoidRootPart.CFrame - Vector3.new(0, 3, 0)
+    part.Parent = workspace
+end)
+
+-- 16. รัวกระโดดกวนตีน
+addBtn("🐸 กระโดดรัวๆ", Color3.fromRGB(0, 200, 50), function()
+    player.Character.Humanoid.JumpPower = 100
+    player.Character.Humanoid.Jump = true
+end)
+
+-- 17. หายตัว (ซ่อนชื่อและตัว)
+addBtn("🫥 ซ่อนตัว (Local)", Color3.fromRGB(200, 200, 200), function()
+    for _, v in pairs(player.Character:GetDescendants()) do
+        if v:IsA("BasePart") or v:IsA("Decal") then v.Transparency = 1 end
+    end
+end)
+
+-- 18. วาร์ปหนี (เมื่อโดนด่า)
+addBtn("🏃 วาร์ปหนีขึ้นฟ้า", Color3.fromRGB(0, 100, 255), function()
+    player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 500, 0)
+end)
+
+-- 19. หมุนตัวด้วยความเร็วแสง
+addBtn("🌪️ หมุนติ้วๆๆ", Color3.fromRGB(150, 150, 0), function()
+    player.Character.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(90), 0)
+end)
+
+-- 20. รีเซ็ตทุกอย่าง
+addBtn("🔄 คืนร่างปกติ", Color3.fromRGB(50, 200, 50), function()
+    stalking = false
+    orbiting = false
+    player.Character.Humanoid.Health = 0 -- ฆ่าตัวตายเพื่อรีเซ็ตบั๊ก
+end)
+
